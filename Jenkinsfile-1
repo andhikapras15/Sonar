@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage("SCM Checkout"){
             steps{
-            git 'https://github.com/samben01/KarateWithJenkins.git'
+            git 'https://github.com/andhikapras15/sonar.git'
             }
         }
         stage("Maven Build"){
@@ -14,5 +14,12 @@ pipeline{
                 bat 'mvn clean package'
             }
         }
+        stage('Scan') {
+      steps {
+        withSonarQubeEnv(installationName: 'sq1') { 
+          sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
+        }
+      }
+    
     }
 }
