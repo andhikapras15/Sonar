@@ -1,15 +1,18 @@
-pipeline {
-  agent any 
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-  }
-  stages {
-    stage('Scan') {
-      steps {
-        withSonarQubeEnv(installationName: 'sq1') { 
-          sh './mvnw clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.9.0.2155:sonar'
-        }
-      }
+pipeline{
+    agent any
+    tools{
+        maven 'Maven'
     }
-  }
+    stages{
+        stage("SCM Checkout"){
+            steps{
+            git 'https://github.com/samben01/KarateWithJenkins.git'
+            }
+        }
+        stage("Maven Build"){
+            steps{
+                bat 'mvn clean package'
+            }
+        }
+    }
 }
