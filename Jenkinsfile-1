@@ -1,5 +1,5 @@
 pipeline {
-  agent { labe lany }
+  agent { label any }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
